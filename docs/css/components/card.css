@@ -1,0 +1,25 @@
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 28px;
+  transition: transform 120ms ease, background 120ms ease, border-color 120ms ease;
+  cursor: pointer;
+}
+
+.card:hover {
+  background: var(--panel-hover);
+  border-color: var(--accent);
+  transform: translateY(-3px);
+}
+
+.card h2 {
+  margin-bottom: 12px;
+  font-size: 18px;
+}
+
+.card p {
+  margin-bottom: 18px;
+  font-size: 14px;
+  line-height: 1.5;
+}

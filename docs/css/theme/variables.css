@@ -1,0 +1,15 @@
+:root {
+  /* Colors */
+  --bg: #f9fafb; /* light page background */
+  --panel: #ffffff;
+  --panel-hover: #f3f4f6;
+  --border: #d1d5db;
+  --text: #111827;
+  --muted: #6b7280;
+  --accent: #3b82f6;
+  --accent-hover: #2563eb;
+
+  /* UI */
+  --radius-md: 12px;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.2);
+}

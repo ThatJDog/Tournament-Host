@@ -1,36 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Local Project Manager</title>
-  <style>
-    body { font-family: system-ui, sans-serif; max-width: 800px; margin: 40px auto; }
-    button { margin: 6px 6px 6px 0; padding: 8px 12px; }
-    input { padding: 6px; width: 240px; }
-    pre { background: #111; color: #0f0; padding: 12px; overflow:auto; }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tournament Manager</title>
+
+    <!-- Link recources -->
+  <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-  <h1>Local Project Manager</h1>
+    <header>
+        <div class="container">
+            <h1>Tournament Manager</h1>
+            <div class="subtitle">
+            Create tournaments locally. Publish globally. No servers required.
+            </div>
+        </div>
+    </header>
 
-  <section>
-    <h2>Create Project</h2>
-    <input id="projectName" placeholder="Project name" />
-    <button id="pickDirBtn">Choose Parent Folder</button>
-    <button id="createBtn" disabled>Create Project</button>
-  </section>
+    <main>
+        <div class="container">
+            <div class="grid">
+                <div class="card" id="create">
+                    <h2>Create New Tournament</h2>
+                    <p>
+                    Start a new tournament project on your computer.
+                    Generate structure, settings, and match data locally.
+                    </p>
+                    <span class="btn">Create Project</span>
+                </div>
 
-  <section>
-    <h2>Open Existing Project File</h2>
-    <button id="openFileBtn">Open project.xml</button>
-  </section>
+                <div class="card" id="open-local">
+                    <h2>Open Local Tournament</h2>
+                    <p>
+                    Continue working on an existing tournament stored
+                    on your machine. Full editing and management tools.
+                    </p>
+                    <span class="btn">Open Local</span>
+                </div>
 
-  <section>
-    <h2>File Contents</h2>
-    <pre id="output">(nothing loaded)</pre>
-  </section>
+                <div class="card" id="view-published">
+                    <h2>View Published Tournaments</h2>
+                    <p>
+                    Browse tournaments hosted online. View brackets,
+                    schedules, and standings in read-only mode.
+                    </p>
+                    <span class="btn">Browse Tournaments</span>
+                </div>
+            </div>
+        </div>
+    </main>
 
-  <script src="app.js"></script>
+    <footer>
+        <div class="footer-inner">
+            <div><span class="brand">Tournament Manager</span> — Local-first tournament tools</div>
+            <div>
+                Static web app • Works offline • No backend required
+                <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const toggleTheme = () => {
+            if (document.documentElement.dataset.theme === 'dark') {
+            document.documentElement.dataset.theme = '';
+            } else {
+            document.documentElement.dataset.theme = 'dark';
+            }
+        };
+    </script>
 </body>
 </html>

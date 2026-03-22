@@ -1,0 +1,40 @@
+.btn {
+  display: inline-block;
+  padding: 10px 16px;
+  border-radius: var(--radius-md);
+  background: var(--accent);
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background 120ms ease, transform 80ms ease;
+}
+
+.btn:hover {
+  background: var(--accent-hover);
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+/* Style specifically for footer theme toggle */
+.theme-toggle {
+  padding: 6px 12px;
+  margin-left: 12px;
+  font-size: 13px;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent);
+  color: white;
+  cursor: pointer;
+  transition: background 120ms ease, transform 80ms ease;
+}
+
+.theme-toggle:hover {
+  background: var(--accent-hover);
+}
+
+.theme-toggle:active {
+  transform: translateY(1px);
+}

@@ -1,0 +1,11 @@
+/* Add this file and toggle by setting data-theme="dark" on <html> */
+:root[data-theme="dark"] {
+  --bg: #0f172a;
+  --panel: #131b2c;
+  --panel-hover: #1f2937;
+  --border: #1f2937;
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+  --accent: #3b82f6;
+  --accent-hover: #2563eb;
+}

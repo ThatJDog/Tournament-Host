@@ -1,0 +1,30 @@
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+  padding: 48px 0;
+}
+
+@media (max-width: 640px) {
+  h1 { font-size: 22px; }
+  .card { padding: 22px; }
+}
