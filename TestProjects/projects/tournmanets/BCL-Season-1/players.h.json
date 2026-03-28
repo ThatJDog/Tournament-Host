@@ -1,0 +1,7 @@
+{
+  "fields": [
+    {"name": "name", "type": "string"},
+    {"name": "nationality", "type": "string"},
+    {"name": "aliases", "type": "array", "subtype": "string"}
+  ]
+}

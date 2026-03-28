@@ -1,74 +1,92 @@
+<!-- ========================= -->
+<!-- index.html (Home)         -->
+<!-- ========================= -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tournament Manager</title>
-
-    <!-- Link recources -->
-  <link rel="stylesheet" href="css/main.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tournament Manager</title>
+  <link rel="stylesheet" href="css/main.css" />
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1>Tournament Manager</h1>
-            <div class="subtitle">
-            Create tournaments locally. Publish globally. No servers required.
-            </div>
+  <header>
+    <div class="container">
+      <h1>Tournament Manager</h1>
+      <div class="subtitle">Create locally. Publish globally. No servers required.</div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <h2>Create</h2>
+      <div class="grid">
+        <div class="card" data-href="tournament-new.html" tabindex="0" role="link">
+            <h3>New Tournament Project</h3>
+            <p>Create an editable tournament project on your device.</p>
+            <span class="btn">Create Tournament</span>
         </div>
-    </header>
-
-    <main>
-        <div class="container">
-            <div class="grid">
-                <div class="card" id="create">
-                    <h2>Create New Tournament</h2>
-                    <p>
-                    Start a new tournament project on your computer.
-                    Generate structure, settings, and match data locally.
-                    </p>
-                    <span class="btn">Create Project</span>
-                </div>
-
-                <div class="card" id="open-local">
-                    <h2>Open Local Tournament</h2>
-                    <p>
-                    Continue working on an existing tournament stored
-                    on your machine. Full editing and management tools.
-                    </p>
-                    <span class="btn">Open Local</span>
-                </div>
-
-                <div class="card" id="view-published">
-                    <h2>View Published Tournaments</h2>
-                    <p>
-                    Browse tournaments hosted online. View brackets,
-                    schedules, and standings in read-only mode.
-                    </p>
-                    <span class="btn">Browse Tournaments</span>
-                </div>
-            </div>
+        <div class="card" data-href="org-new.html" tabindex="1" role="link">
+          <h3>New Organisation</h3>
+          <p>Define league ecosystem: rules, maps, modes, branding.</p>
+          <span class="btn">Create Organisation</span>
         </div>
-    </main>
+      </div>
 
-    <footer>
-        <div class="footer-inner">
-            <div><span class="brand">Tournament Manager</span> — Local-first tournament tools</div>
-            <div>
-                Static web app • Works offline • No backend required
-                <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
-            </div>
+      <h2>Work Locally</h2>
+      <div class="grid">
+        <div class="card" data-href="tournament-open.html" tabindex="2" role="link">
+          <h3>Open Tournament Project</h3>
+          <p>Edit participants, format, bracket, schedule, results.</p>
+          <span class="btn">Open Tournament</span>
         </div>
-    </footer>
+        <div class="card" data-href="org-open.html" tabindex="3" role="link">
+          <h3>Open Organisation</h3>
+          <p>Manage shared assets and player registry.</p>
+          <span class="btn">Open Organisation</span>
+        </div>
+      </div>
 
-    <script>
-        const toggleTheme = () => {
-            if (document.documentElement.dataset.theme === 'dark') {
-            document.documentElement.dataset.theme = '';
-            } else {
-            document.documentElement.dataset.theme = 'dark';
-            }
-        };
-    </script>
+      <h2>Explore</h2>
+      <div class="grid">
+        <div class="card" data-href="tournaments.html" tabindex="4" role="link">
+          <h3>Browse Tournaments</h3>
+          <p>View published brackets, standings, and results.</p>
+          <span class="btn">Browse</span>
+        </div>
+        <div class="card" data-href="orgs.html" tabindex="5" role="link">
+          <h3>Browse Organisations</h3>
+          <p>Explore leagues and their tournament history.</p>
+          <span class="btn">Browse</span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div><span class="brand">Tournament Manager</span> — Local-first tournament tools</div>
+      <div>
+        Static web app • Works offline • No backend required
+        <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Button link helper
+    document.querySelectorAll('.card[data-href]').forEach(card => {
+        const go = () => window.location.href = card.dataset.href;
+        card.addEventListener('click', go);
+        card.addEventListener('keypress', e => {
+            if (e.key === 'Enter' || e.key === ' ') go();
+        });
+    });
+
+    const toggleTheme = () => {
+        document.documentElement.dataset.theme =
+            document.documentElement.dataset.theme === 'dark' ? '' : 'dark';
+    };
+</script>
 </body>
 </html>

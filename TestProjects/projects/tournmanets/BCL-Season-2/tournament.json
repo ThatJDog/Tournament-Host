@@ -1,0 +1,12 @@
+{
+  "id": "BCL-S2",
+  "name": "BCL Season 2",
+  "org": "BCL",
+  "base": "BCL-S1",
+  "created": "2026-02-01",
+
+  "ruleset": "standard-v1",
+  "ratings": "ratings.json",
+  "maps": "maps.json",
+  "modes": "modes.json"
+}

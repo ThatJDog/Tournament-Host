@@ -12,19 +12,36 @@ body {
 
 main {
   flex: 1;
-  display: flex;
-  align-items: center;
+  display: block; /* natural flow, no vertical centering */
+
+  /* display: flex;
+  align-items: center; */
+
+  padding: 24px 0;
 }
 
 .grid {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 400px)); /*1fr means fill remaining size*/
   gap: 24px;
-  padding: 48px 0;
+  padding: 24px 0;
 }
 
 @media (max-width: 640px) {
-  h1 { font-size: 22px; }
-  .card { padding: 22px; }
+  h1 {
+    font-size: 22px;
+  }
+
+  h2 {
+    font-size: 18px;
+  }
+
+  .card {
+    padding: 22px;
+  }
+
+  .tabs {
+    flex-direction: column;
+  }
 }

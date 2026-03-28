@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Alice",
+    "nationality": "USA",
+    "aliases": [
+      "Ace",
+      "A"
+    ]
+  },
+  {
+    "name": "Bob",
+    "nationality": "UK",
+    "aliases": [
+      "Bobby"
+    ]
+  },
+  {
+    "name": "Foggle",
+    "nationality": "UK",
+    "aliases": []
+  }
+]

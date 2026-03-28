@@ -1,0 +1,21 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.list-item {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 16px 24px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.list-item .muted {
+  font-size: 0.875rem;
+  color: #666;
+}
