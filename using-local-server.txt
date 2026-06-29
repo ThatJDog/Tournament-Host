@@ -1,0 +1,2 @@
+cd C:\Users\joell\Documents\GitHub\Tournament-Host\docs
+python -m http.server 8000

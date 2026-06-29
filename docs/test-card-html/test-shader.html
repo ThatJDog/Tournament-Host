@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Player Card</title>
+    <style>
+        body {
+            background: #111;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+    </style>
+    <script src="../shadergraph/shadergraph.js"></script>
+</head>
+<body>
+    <script type="module">
+        async function main() {
+            const graph = new Graph();
+            const rm = new ResourceManager();
+
+            // --- Load textures ---
+            const texA = await rm.loadImage("player.png", TilingModes.ZERO);
+            const texB = await rm.loadImage("flag_GB.svg", TilingModes.ZERO);
+            const texC = await rm.loadText("Foggle", {
+                font: "72px sans-serif",
+                color: "white",
+                width: 256,
+                height: 256,
+                align: "center",
+                baseline: "top"
+            });
+
+            // --- Nodes ---
+            const uv = graph.add(new UVNode());
+
+            const texCAlignUv = graph.add(new AlignUvNode());
+
+            const img1 = graph.add(new ImageNode(texA));
+            const img2 = graph.add(new ImageNode(texB));
+            const img3 = graph.add(new ImageNode(texC));
+
+            const sampleImg1 = graph.add(new SampleTextureNode())
+            const sampleImg2 = graph.add(new SampleTextureNode())
+            const sampleImg3 = graph.add(new SampleTextureNode())
+
+            const mul = graph.add(Vec4MulNode());
+            const add = graph.add(Vec4AddNode());
+
+            // --- Wiring ---
+
+            graph.connect(img1, "tex", sampleImg1, "texture");
+            graph.connect(img2, "tex", sampleImg2, "texture");
+            graph.connect(img3, "tex", sampleImg3, "texture");
+
+            graph.connect(uv, "uv", sampleImg1, "uv");
+            graph.connect(uv, "uv", sampleImg2, "uv");
+
+            graph.connect(uv, "uv", texCAlignUv, "uv");
+            graph.connect(img3, "res", texCAlignUv, "sourceRes");
+            graph.connect(graph.add(new OutResNode()), "out", texCAlignUv, "outRes");
+            graph.connect(texCAlignUv, "uv", sampleImg3, "uv");
+
+            graph.connect(sampleImg1, "out", mul, "a");
+            graph.connect(sampleImg2, "out", mul, "b");
+
+            graph.connect(mul, "out", add, "a");
+            graph.connect(sampleImg3, "out", add, "b");
+
+            // --- Compile ---
+            const fn = graph.compile(add);
+
+            // --- Render ---
+            const canvas = await renderGraphToCanvas(fn, "out", 512, 512);
+            document.body.appendChild(canvas);
+        }
+
+        main();
+</script>
+
+</body>
+</html>

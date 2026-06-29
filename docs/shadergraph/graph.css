@@ -1,0 +1,141 @@
+#graph-container {
+    margin: 0;
+    overflow: hidden;
+    font-family: sans-serif;
+    background: #1e1e1e;
+}
+
+#viewport {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    cursor: grab;
+}
+
+#viewport.dragging {
+    cursor: grabbing;
+}
+
+/* GRID */
+#grid {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image:
+        linear-gradient(to right, #2a2a2a 1px, transparent 1px),
+        linear-gradient(to bottom, #2a2a2a 1px, transparent 1px);
+    background-size: 40px 40px;
+    transform-origin: 0 0;
+}
+
+/* GRAPH */
+#graph {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform-origin: 0 0;
+    z-index: 0;
+}
+
+/* SVG wires NOT USED */
+#wires {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    transform-origin: 0 0;
+    z-index: 2;
+}
+
+/* NODE */
+.node {
+    position: absolute;
+    width: 200px;
+    background: #2d2d2d;
+    border: 1px solid #444;
+    border-radius: 6px;
+    color: #ddd;
+    user-select: none;
+    z-index: 1;
+    overflow: visible;
+}
+
+.node.selected {
+    border: 1px solid #00aaff;
+    box-shadow: 0 0 8px rgba(0, 170, 255, 0.6);
+}
+
+.nodeHeader {
+    background: #3a3a3a;
+    padding: 6px;
+    cursor: grab;
+    font-weight: bold;
+
+    border-radius: 6px 6px 0px 0px;
+}
+
+.nodeBody {
+    padding: 8px;
+}
+
+.inputs, .outputs {
+    display: flex;
+    flex-direction: column;
+    gap: 0px; /* gap between pins vertically */
+}
+
+.inputs {
+    align-items: flex-start; /* left side */
+}
+
+.outputs {
+    align-items: flex-end;   /* right side */
+}
+
+.pin {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 4px 0;
+    font-size: 12px;
+    gap: 6px; /* controls spacing between label and circle */
+    z-index: 3;
+}
+
+.pin.out {
+    flex-direction: row-reverse;
+}
+
+.inputs .pin {
+    justify-content: flex-start;
+}
+
+.outputs .pin {
+    justify-content: flex-end;
+}
+
+.pinCircle {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    cursor: crosshair;
+    z-index: 4;
+}
+
+/* TYPE COLORS */
+.type-float { background: #6aa6ff; }
+.type-vec2  { background: #4ec9b0; }
+.type-vec3  { background: #c586c0; }
+.type-vec4  { background: #dcdcaa; }
+
+/* selection rectangle */
+.selection-box {
+    position: absolute;
+    border: 1px dashed #00aaff;
+    background: rgba(0, 170, 255, 0.15);
+    pointer-events: none;
+    z-index: 9999;
+}

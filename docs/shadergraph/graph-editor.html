@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Shader Graph Editor</title>
+    <link rel="stylesheet" href="graph-inspector.css" />
+    <link rel="stylesheet" href="graph.css" />
+</head>
+
+<body>
+    <!-- LEFT: NODE LIBRARY -->
+    <div id="leftPanel">
+        <div class="category">
+            <h3>Input</h3>
+            <div class="nodeItem" draggable="true">UV Node</div>
+            <div class="nodeItem" draggable="true">Time Node</div>
+        </div>
+
+        <div class="category">
+            <h3>Math</h3>
+            <div class="nodeItem" draggable="true">Add</div>
+            <div class="nodeItem" draggable="true">Multiply</div>
+        </div>
+
+        <div class="category">
+            <h3>Texture</h3>
+            <div class="nodeItem" draggable="true">Image Sample</div>
+        </div>
+    </div>
+
+    <!-- CENTER: GRAPH CANVAS -->
+    <div id="graph-container">
+        <div id="viewport">
+            <div id="grid"></div>
+            <svg id="wires"></svg>
+            <div id="graph"></div>
+        </div>
+    </div>
+
+    <!-- RIGHT: SETTINGS -->
+    <div id="rightPanel">
+        <h2>Graph Settings</h2>
+
+        <div class="section">
+            <h3>Output Node</h3>
+
+            <div class="inputRow">
+                <label>Name</label>
+                <input id="outputName" placeholder="Output" />
+            </div>
+
+            <button onclick="addOutput()">Add Output Pin</button>
+
+            <div id="outputList" class="nodeList"></div>
+        </div>
+
+        <div class="section">
+            <h3>Input Nodes</h3>
+
+            <div class="inputRow">
+                <label>Name</label>
+                <input id="inputName" placeholder="Input" />
+            </div>
+
+            <button onclick="addInput()">Add Input Node</button>
+
+            <div id="inputList" class="nodeList"></div>
+        </div>
+    </div>
+
+    <!-- Scripts run after doc loaded -->
+    <script src="./graph-inspector.js"></script>
+    <script src="./graph.js"></script>
+    <!-- <script src="./shadergraph.js"></script> -->
+
+    <script>
+
+        import "./shader-graph-mapping";
+
+        const visualLib = shaderLib.buildVisualLibrary();
+
+        const editor = new VisualGraphEditor({
+            container: document.getElementById("graph-container"),
+            leftPanel: document.getElementById("leftPanel"),
+            nodeLibrary: visualLib
+        });
+
+        /*
+        graph.serialize();      // → JSON
+        graph.deserialize(json);
+        graph.clear();
+        graph.save(path);       // optional (if you wire filesystem later)
+        graph.load(json);
+        */
+
+        editor.graph.deserialize(
+        {
+            "camera": { "x": 0, "y": 0, "scale": 1 },
+            "nodes": [
+                {
+                "id": 0,
+                "name": "Float",
+                "x": 200,
+                "y": 200,
+                "inputs": [],
+                "outputs": [
+                    { "name": "Value", "type": "FLOAT" }
+                ]
+                },
+                {
+                "id": 1,
+                "name": "Vec2",
+                "x": 500,
+                "y": 300,
+                "inputs": [
+                    {"name": "x", "type": "FLOAT"}, {"name": "y", "type": "FLOAT"}
+                ],
+                "outputs": [
+                    { "name": "Out", "type": "VEC2" }
+                ]
+                }
+            ],
+            "connections": [
+                {
+                "fromNode": 0,
+                "fromPin": "Value",
+                "toNode": 1,
+                "toPin": "A"
+                }
+            ]
+        });
+    </script>
+
+</body>
+</html>

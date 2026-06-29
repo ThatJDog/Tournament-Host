@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Player Card</title>
+    <link rel="stylesheet" href="css/main.css"/>
+    <style>
+        body {
+            background: #111;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        /* Responsive card */
+        .player-card {
+            /* width: clamp(180px, 20vw, 320px); /* fluid scaling */
+            aspect-ratio: 5 / 7;             /* matches 2.5 x 3.5 inches */
+            border-radius: 1%;
+            background: linear-gradient(160deg, #1b1b63, #272b95);
+            border: 0px solid #444;
+            position: relative;
+            color: white;
+            font-family: 'Segoe UI', sans-serif;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+
+            font-size: 16px; /* base typography scales */
+        }
+
+        /* Rating */
+        .rating {
+            position: absolute;
+            top: 3%;
+            left: 4%;
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        /* Image */
+        .image-wrapper {
+            position: absolute;
+            left: 0%;
+            right: 0%;
+            top: 5%;
+            height: 60%;
+        }
+
+        .player-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Fade overlay */
+        .image-wrapper::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 40%;
+        }
+
+        /* Top info */
+        .top {
+            position: absolute;
+            top: 3%;
+            right: 4%;
+            text-align: right;
+        }
+
+        .position {
+            font-size: 0.8em;
+            opacity: 0.8;
+        }
+
+        .flag {
+            width: 10%;
+            margin-top: 2%;
+        }
+
+        /* Name */
+        .name {
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-top: 2%;
+        }
+
+        .name {
+            position: absolute;
+            top: 70%;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.6em;
+        }
+
+        /* Rarity */
+        .rarity {
+            position: absolute;
+            bottom: 2.5%;
+            left: 0%;
+            right: 0%;
+
+            display: flex;
+            justify-content: center;
+            gap: 1%;
+            margin: 0 0;
+        }
+
+        .rarity img {
+            width: 4%;
+        }
+
+        .stats-row {
+            position: absolute;
+            left: 6%;
+            right: 6%;
+            top: 82%;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            width: 12%;
+            text-align: center;
+        }
+
+        /* Label */
+        .stat-label {
+            font-size: 0.7em;
+            opacity: 0.8;
+        }
+
+        /* Arrow icon */
+        .stat-icon {
+            width: 70%;
+            aspect-ratio: 1;
+            margin-top: 8%;
+
+            background-color: white; /* will be overridden */
+
+            -webkit-mask-size: contain;
+            -webkit-mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+
+            mask-size: contain;
+            mask-repeat: no-repeat;
+            mask-position: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Copy cards into here when rendering (setup js script for it) -->
+    <div id="render-stage" style="position:absolute; left:-9999px; top:-9999px;">
+        <script>
+            async function renderCardToImage(element) {
+                const canvas = await html2canvas(element, {
+                    scale: 2, // higher resolution
+                    useCORS: true
+                });
+
+                const imgData = canvas.toDataURL("image/png");
+
+                return imgData; // base64 image
+            }
+
+            // Usage
+            // Needs to be pipelined with everything
+            // const card = document.querySelector(".player-card");
+
+            /*renderCardToImage(card).then(img => {
+                const image = new Image();
+                image.src = img;
+                document.body.appendChild(image);
+            });*/
+        </script>
+
+    </div>
+
+    <div class="player-card">
+
+        <!-- Rating -->
+        <div class="rating">92</div>
+
+        <!-- Player Image -->
+        <div class="image-wrapper">
+            <img class="player-img" src="player.png" alt="Player">
+        </div>
+
+        <!-- Top Info -->
+        <div class="top">
+            <div class="position">ST</div>
+            <img class="flag" src="flag_GB.svg" alt="Flag">
+        </div>
+
+        <!-- Name -->
+        <div class="name">Foggle</div>
+
+        <!-- Rarity -->
+        <div class="rarity">
+            <!-- Filled with stars in JS -->
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-row">
+            <div class="stat" data-key="OFF"></div>
+            <div class="stat" data-key="DEF"></div>
+            <div class="stat" data-key="KDR"></div>
+            <div class="stat" data-key="KPM"></div>
+            <div class="stat" data-key="OBJ"></div>
+            <div class="stat" data-key="SPM"></div>
+        </div>
+
+    </div>
+
+    <script>
+        function setCardSizeFromHeight(cardEl, heightPx) {
+            // Match Attax Are 5:7
+            const ratioWidth = 5;
+            const ratioHeight = 8;
+
+            const widthPx = heightPx * (ratioWidth / ratioHeight);
+
+            cardEl.style.width = `${widthPx}px`;
+            cardEl.style.height = `${heightPx}px`;
+        }
+
+        /**
+         * Apply a vertical mask fade with easing
+         * @param {HTMLElement} el
+         * @param {Object} options
+         * @param {number} options.start - % where fade begins (0–100)
+         * @param {number} options.steps - number of gradient stops (higher = smoother)
+         * @param {string} options.ease - "easeIn", "easeOut", "linear"
+         */
+        function applyFadeMask(el, {
+            start = 60,
+            steps = 8,
+            ease = "sineInOut"
+        } = {}) {
+
+            // Easing functions
+            const easing = {
+
+                // --- Quadratic ---
+                quadIn: (t) => t * t,
+
+                quadOut: (t) => 1 - (1 - t) * (1 - t),
+
+                quadInOut: (t) =>
+                    t < 0.5
+                        ? 2 * t * t
+                        : 1 - Math.pow(-2 * t + 2, 2) / 2,
+
+
+                // --- Sine ---
+                sineIn: (t) =>
+                    1 - Math.cos((t * Math.PI) / 2),
+
+                sineOut: (t) =>
+                    Math.sin((t * Math.PI) / 2),
+
+                sineInOut: (t) =>
+                    -(Math.cos(Math.PI * t) - 1) / 2
+            };
+
+            const fn = easing[ease] || easing.linear;
+
+            let stops = [];
+
+            // Solid part before fade
+            stops.push(`rgba(0,0,0,1) 0%`);
+            stops.push(`rgba(0,0,0,1) ${start}%`);
+
+            // Fade section
+            for (let i = 1; i <= steps; i++) {
+                const t = i / steps; // 0 → 1
+                const eased = fn(t);
+                const opacity = 1 - eased;
+
+                const pos = start + (100 - start) * t;
+
+                stops.push(`rgba(0,0,0,${opacity.toFixed(3)}) ${pos.toFixed(1)}%`);
+            }
+
+            const gradient = `linear-gradient(to bottom, ${stops.join(", ")})`;
+
+            el.style.webkitMaskImage = gradient;
+            el.style.maskImage = gradient;
+        }
+
+        // == Dynamic Setting functions ==
+        function assignStats(stats) {
+            const valueMap = {
+                // HSL: S: is like Value, L: is like saturation
+                1: { icon: "icons/Down2.png", color: "hsl(0, 100%, 69%)" },
+                2: { icon: "icons/Down1.png", color: "hsl(0, 100%, 69%)" },
+                3: { icon: "icons/Mid1.png", color: "hsl(25, 100%, 69%)" },
+                4: { icon: "icons/Up1.png", color: "hsl(100, 80%, 69%)" },
+                5: { icon: "icons/Up2.png", color: "hsl(100, 80%, 69%)" },
+                6: { icon: "icons/Up3.png", color: "hsl(50, 80%, 69%)" }
+            };
+
+            document.querySelectorAll(".stat").forEach(el => {
+                const key = el.dataset.key;
+                const value = stats[key];
+                const visual = valueMap[value];
+
+                el.innerHTML = `
+                    <div class="stat-label">${key}</div>
+                    <div class="stat-icon"></div>
+                `;
+
+                const icon = el.querySelector(".stat-icon");
+
+                // Set icon
+                icon.style.backgroundImage = `url(${visual.icon})`;
+                icon.style.backgroundColor = visual.color;
+                icon.style.webkitMaskImage = `url(${visual.icon})`;
+                icon.style.maskImage = `url(${visual.icon})`;
+
+                // Apply color tint (works best if icons are white)
+                // icon.style.filter = `drop-shadow(0 0 4px ${visual.color})`;
+
+                // Optional: color label too
+                // el.querySelector(".stat-label").style.color = visual.color;
+            });
+        }
+
+        function renderStars(el, count) {
+            el.innerHTML = "";
+
+            for (let i = 0; i < count; i++) {
+                const img = document.createElement("img");
+                img.src = "icons/star.png";
+                el.appendChild(img);
+            }
+        }
+
+        // Player Card Stats
+        const stats = {
+            OFF: 6,
+            DEF: 3,
+            KDR: 5,
+            KPM: 4,
+            OBJ: 2,
+            SPM: 1
+        };
+        const stars = 5;
+
+        // Application
+        const img = document.querySelector(".player-img");
+        const player_card = document.querySelector(".player-card");
+
+        setCardSizeFromHeight(player_card, 420); // px
+
+        applyFadeMask(img, {
+            start: 60,   // where fade begins
+            steps: 10,   // smoothness
+            ease: "sineInOut" // fast -> slow
+        });
+
+        // Dynamic
+        const rarity_cont = document.querySelector(".rarity");
+        renderStars(rarity_cont, stars);
+        assignStats(stats);
+    </script>
+
+</body>
+</html>
