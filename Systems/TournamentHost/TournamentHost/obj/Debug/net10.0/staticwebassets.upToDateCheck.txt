@@ -1,0 +1,2 @@
+wwwroot\index.html
+C:\Users\joell\Documents\Projects\Visual Studio\TournamentHost\TournamentHost\wwwroot\index.html
